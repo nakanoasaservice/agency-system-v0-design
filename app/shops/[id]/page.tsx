@@ -195,4 +195,3 @@ export default function ShopDetailPage({ params }: { params: { id: string } }) {
     </div>
   )
 }
-

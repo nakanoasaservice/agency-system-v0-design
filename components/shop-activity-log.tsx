@@ -26,7 +26,7 @@ export function ShopActivityLog({ shopId }: ShopActivityLogProps) {
       id: "ACT-003",
       date: "2025-03-20 14:45",
       type: "upgrade",
-      description: "プラン変更",
+      description: "プ���ン変更",
       details: "スタンダードプランからプロフェッショナルプランへアップグレード",
     },
     {
@@ -72,4 +72,3 @@ export function ShopActivityLog({ shopId }: ShopActivityLogProps) {
     </Card>
   )
 }
-

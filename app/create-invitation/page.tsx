@@ -6,11 +6,12 @@ import { useState } from "react"
 import { useRouter } from "next/navigation"
 import Link from "next/link"
 import { Button } from "@/components/ui/button"
-import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card"
+import { Card, CardContent, CardDescription, CardFooter, CardHeader } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Label } from "@/components/ui/label"
-import { ArrowLeft, X } from "lucide-react"
+import { X, ArrowLeft } from "lucide-react"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Header } from "@/components/header"
 
 export default function CreateInvitationPage() {
   const router = useRouter()
@@ -52,44 +53,23 @@ export default function CreateInvitationPage() {
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="bg-white border-b">
-        <div className="container flex h-16 items-center px-4 sm:px-6">
-          <Link href="/" className="font-bold text-xl">
-            代理店ポータル
-          </Link>
-          <nav className="ml-auto flex gap-4 sm:gap-6">
-            <Link href="/dashboard" className="text-sm font-medium">
-              ダッシュボード
-            </Link>
-            <Link href="/invitations" className="text-sm font-medium text-primary">
-              招待コード
-            </Link>
-            <Link href="/shops" className="text-sm font-medium">
-              ショップ管理
-            </Link>
-            <Link href="/rewards" className="text-sm font-medium">
-              報酬管理
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <main className="flex-1 py-6 px-4 sm:px-6">
         <div className="mx-auto max-w-2xl">
-          <div className="flex items-center mb-6">
+          <div className="mb-6 flex items-center">
             <Button variant="ghost" size="sm" asChild className="mr-2">
               <Link href="/invitations">
                 <ArrowLeft className="h-4 w-4 mr-2" />
-                戻る
+                招待コード一覧に戻る
               </Link>
             </Button>
-            <h1 className="text-2xl font-bold tracking-tight">招待コード作成</h1>
+            <h1 className="text-2xl font-bold tracking-tight">招待コード発行</h1>
           </div>
 
           <Card>
             <form onSubmit={handleSubmit}>
               <CardHeader>
-                <CardTitle>新規招待コード</CardTitle>
-                <CardDescription>お客様がアカウント作成する際に使用する招待コードを作成します。</CardDescription>
+                <CardDescription>招待コードは以下の設定で発行完了します。</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="space-y-2">
@@ -150,16 +130,17 @@ export default function CreateInvitationPage() {
                 </div>
 
                 <div className="space-y-2">
-                  <Label htmlFor="max-signups">最大利用回数</Label>
+                  <Label htmlFor="max-signups">招待数の上限設定</Label>
                   <div className="flex gap-2">
                     <Input
                       id="max-signups"
                       type="number"
-                      placeholder="無制限"
+                      placeholder=""
                       value={maxSignups}
                       onChange={(e) => setMaxSignups(e.target.value)}
                       min="1"
-                      className="flex-1"
+                      className="flex-1 [appearance:textfield] [&::-webkit-outer-spin-button]:appearance-none [&::-webkit-inner-spin-button]:appearance-none"
+                      style={{ MozAppearance: "textfield" }}
                     />
                     {maxSignups && (
                       <TooltipProvider>
@@ -176,18 +157,18 @@ export default function CreateInvitationPage() {
                             </Button>
                           </TooltipTrigger>
                           <TooltipContent>
-                            <p>クリア（無制限）</p>
+                            <p>クリア</p>
                           </TooltipContent>
                         </Tooltip>
                       </TooltipProvider>
                     )}
                   </div>
-                  <p className="text-xs text-muted-foreground">空欄の場合は無制限として扱われます</p>
+                  <p className="text-xs text-muted-foreground">空欄の場合は上限なしとして扱われます</p>
                 </div>
               </CardContent>
               <CardFooter className="flex justify-end">
                 <Button type="submit" disabled={isSubmitting}>
-                  {isSubmitting ? "作成中..." : "作成"}
+                  {isSubmitting ? "発行中..." : "発行する"}
                 </Button>
               </CardFooter>
             </form>
@@ -197,4 +178,3 @@ export default function CreateInvitationPage() {
     </div>
   )
 }
-

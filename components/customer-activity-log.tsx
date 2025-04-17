@@ -72,4 +72,3 @@ export function CustomerActivityLog({ customerId }: CustomerActivityLogProps) {
     </Card>
   )
 }
-

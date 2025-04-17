@@ -6,11 +6,12 @@ import { Button } from "@/components/ui/button"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Input } from "@/components/ui/input"
 import { Badge } from "@/components/ui/badge"
-import { Copy, Plus, ArrowUpDown, Check, Calendar, Users, FileText } from "lucide-react"
+import { Copy, Plus, ArrowUpDown, Check, Calendar, Users, FileText, Search } from "lucide-react"
 import { DataTable } from "@/components/ui/data-table"
 import type { ColumnDef } from "@tanstack/react-table"
 import { useToast } from "@/hooks/use-toast"
 import { Tooltip, TooltipContent, TooltipProvider, TooltipTrigger } from "@/components/ui/tooltip"
+import { Header } from "@/components/header"
 
 type Invitation = {
   code: string
@@ -177,6 +178,7 @@ export default function InvitationsPage() {
           </Tooltip>
         </TooltipProvider>
       ),
+      minSize: 120,
     },
     {
       accessorKey: "memo",
@@ -206,6 +208,7 @@ export default function InvitationsPage() {
           </TooltipProvider>
         )
       },
+      minSize: 200,
     },
     {
       accessorKey: "created",
@@ -217,6 +220,7 @@ export default function InvitationsPage() {
           </button>
         )
       },
+      minSize: 150,
     },
     {
       accessorKey: "expiration",
@@ -233,6 +237,7 @@ export default function InvitationsPage() {
         const expiration = row.original.expiration
         return <span>{expiration ? expiration : "無期限"}</span>
       },
+      minSize: 150,
     },
     {
       accessorKey: "maxSignups",
@@ -240,7 +245,7 @@ export default function InvitationsPage() {
         return (
           <button className="flex items-center" onClick={() => column.toggleSorting(column.getIsSorted() === "asc")}>
             <Users className="mr-1 h-4 w-4" />
-            最大利用回数
+            招待数の上限設定
             <ArrowUpDown className="ml-1 h-4 w-4" />
           </button>
         )
@@ -249,6 +254,7 @@ export default function InvitationsPage() {
         const maxSignups = row.original.maxSignups
         return <span>{maxSignups ? `${maxSignups}件` : "無制限"}</span>
       },
+      minSize: 140,
     },
     {
       accessorKey: "status",
@@ -258,6 +264,7 @@ export default function InvitationsPage() {
           {row.original.status === "active" ? "有効" : "無効"}
         </Badge>
       ),
+      minSize: 80,
     },
     {
       accessorKey: "signups",
@@ -270,100 +277,61 @@ export default function InvitationsPage() {
         )
       },
       cell: ({ row }) => <span>{row.original.signups}件</span>,
+      minSize: 80,
     },
     {
       id: "actions",
+      header: "操作",
       cell: ({ row }) => {
         const invitation = row.original
         return (
           <div className="flex space-x-2">
-            <TooltipProvider>
-              <Tooltip>
-                <TooltipTrigger asChild>
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => copyToClipboard(invitation.url, "link", invitation.code)}
-                  >
-                    {copiedLink === invitation.code ? (
-                      <Check className="h-4 w-4 text-green-500" />
-                    ) : (
-                      <Copy className="h-4 w-4" />
-                    )}
-                  </Button>
-                </TooltipTrigger>
-                <TooltipContent>
-                  <p>招待リンクをコピー</p>
-                </TooltipContent>
-              </Tooltip>
-            </TooltipProvider>
             <Button variant="outline" size="sm" asChild>
               <Link href={`/invitations/${invitation.code}`}>詳細</Link>
             </Button>
           </div>
         )
       },
+      minSize: 120,
     },
   ]
 
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="bg-white border-b">
-        <div className="container flex h-16 items-center px-4 sm:px-6">
-          <Link href="/" className="font-bold text-xl">
-            代理店ポータル
-          </Link>
-          <nav className="ml-auto flex gap-4 sm:gap-6">
-            <Link href="/dashboard" className="text-sm font-medium">
-              ダッシュボード
-            </Link>
-            <Link href="/invitations" className="text-sm font-medium text-primary">
-              招待コード
-            </Link>
-            <Link href="/shops" className="text-sm font-medium">
-              ショップ管理
-            </Link>
-            <Link href="/rewards" className="text-sm font-medium">
-              報酬管理
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <main className="flex-1 py-6 px-4 sm:px-6">
         <div className="flex flex-col space-y-6">
           <div className="flex items-center justify-between">
             <h1 className="text-2xl font-bold tracking-tight">招待コード管理</h1>
             <Button asChild>
               <Link href="/create-invitation">
-                <Plus className="mr-2 h-4 w-4" /> 招待コード作成
+                <Plus className="mr-2 h-4 w-4" /> 招待コード発行
               </Link>
             </Button>
           </div>
 
           <Card>
             <CardHeader>
-              <CardTitle>招待コード検索</CardTitle>
-              <CardDescription>招待コードやメモで検索できます。</CardDescription>
+              <CardTitle>すべての招待コード</CardTitle>
+              <CardDescription>
+                招待コードやメモで検索できます。招待コードをクリックするとコピーできます。
+              </CardDescription>
             </CardHeader>
             <CardContent>
-              <div className="flex space-x-2">
+              <div className="relative mb-6">
+                <Search className="absolute left-2.5 top-2.5 h-4 w-4 text-gray-500" />
                 <Input
                   placeholder="招待コードやメモで検索..."
-                  className="flex-1"
+                  className="pl-8"
                   value={searchQuery}
                   onChange={(e) => setSearchQuery(e.target.value)}
                 />
               </div>
-            </CardContent>
-          </Card>
-
-          <Card>
-            <CardHeader>
-              <CardTitle>すべての招待コード</CardTitle>
-              <CardDescription>招待コードをクリックするとコピーできます。</CardDescription>
-            </CardHeader>
-            <CardContent>
-              <DataTable columns={columns} data={filteredInvitations} pageSize={4} />
+              <div className="overflow-x-auto">
+                <div className="min-w-[1100px]">
+                  <DataTable columns={columns} data={filteredInvitations} pageSize={4} />
+                </div>
+              </div>
             </CardContent>
           </Card>
         </div>
@@ -371,4 +339,3 @@ export default function InvitationsPage() {
     </div>
   )
 }
-

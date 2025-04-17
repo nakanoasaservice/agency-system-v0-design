@@ -293,7 +293,7 @@ export default function CustomersPage() {
           <Card>
             <CardHeader>
               <CardTitle>顧客検索とフィルタリング</CardTitle>
-              <CardDescription>名前やメールアドレスで検索、または招待コードでフィルタリングできます。</CardDescription>
+              <CardDescription>名前やメールアドレスで検索、または招待コードでフィルタリ���グできます。</CardDescription>
             </CardHeader>
             <CardContent>
               <div className="flex flex-col space-y-4 md:flex-row md:space-y-0 md:space-x-4">
@@ -337,4 +337,3 @@ export default function CustomersPage() {
     </div>
   )
 }
-

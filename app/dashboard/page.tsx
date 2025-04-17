@@ -1,45 +1,18 @@
 "use client"
 import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs"
-import { Button } from "@/components/ui/button"
-import { Plus } from "lucide-react"
-import Link from "next/link"
 import { Bar, BarChart as RechartsBarChart, CartesianGrid, Cell, LabelList, XAxis, YAxis } from "recharts"
 import { type ChartConfig, ChartContainer } from "@/components/ui/chart"
+import { Header } from "@/components/header"
 
 export default function DashboardPage() {
   return (
     <div className="flex min-h-screen flex-col">
-      <header className="bg-white border-b">
-        <div className="container flex h-16 items-center px-4 sm:px-6">
-          <Link href="/" className="font-bold text-xl">
-            代理店ポータル
-          </Link>
-          <nav className="ml-auto flex gap-4 sm:gap-6">
-            <Link href="/dashboard" className="text-sm font-medium text-primary">
-              ダッシュボード
-            </Link>
-            <Link href="/invitations" className="text-sm font-medium">
-              招待コード
-            </Link>
-            <Link href="/shops" className="text-sm font-medium">
-              ショップ管理
-            </Link>
-            <Link href="/rewards" className="text-sm font-medium">
-              報酬管理
-            </Link>
-          </nav>
-        </div>
-      </header>
+      <Header />
       <main className="flex-1 p-4 md:p-6">
         <div className="flex flex-col gap-4 md:gap-8">
-          <div className="flex items-center justify-between">
+          <div className="mb-4">
             <h1 className="text-2xl font-bold tracking-tight">ダッシュボード</h1>
-            <Button asChild>
-              <Link href="/create-invitation">
-                <Plus className="mr-2 h-4 w-4" /> 招待コード作成
-              </Link>
-            </Button>
           </div>
 
           <div className="grid gap-4 md:grid-cols-2 lg:grid-cols-4">
@@ -276,4 +249,3 @@ function RewardsChart() {
     </ChartContainer>
   )
 }
-

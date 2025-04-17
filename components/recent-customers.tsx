@@ -75,4 +75,3 @@ export function RecentCustomers() {
     </Card>
   )
 }
-
