@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Building, ChevronDown, LogOut, User, LayoutDashboard, Ticket, Store, CreditCard } from "lucide-react"
+import { Building, ChevronDown, LogOut, User, LayoutDashboard, Ticket, Store, CreditCard, Gauge, Store, CircleDollarSign } from "lucide-react"
 
 export function Header() {
   // 現在選択されている代理店
@@ -92,7 +92,7 @@ export function Header() {
             }`}
             onClick={() => setCurrentPath("/dashboard")}
           >
-            <LayoutDashboard className="h-5 w-5 mb-1" />
+            <Gauge className="h-5 w-5 mb-1" />
             <span className="text-xs font-medium">ダッシュボード</span>
           </Link>
           <Link
@@ -122,7 +122,7 @@ export function Header() {
             }`}
             onClick={() => setCurrentPath("/rewards")}
           >
-            <CreditCard className="h-5 w-5 mb-1" />
+            <CircleDollarSign className="h-5 w-5 mb-1" />
             <span className="text-xs font-medium">報酬管理</span>
           </Link>
         </nav>
