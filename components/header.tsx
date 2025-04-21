@@ -12,7 +12,7 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Building, ChevronDown, LogOut, User, LayoutDashboard, Ticket, Store, CreditCard, Gauge, Store, CircleDollarSign } from "lucide-react"
+import { Building, ChevronDown, LogOut, User, Settings, Gauge, Ticket, Store, CircleDollarSign } from "lucide-react"
 
 export function Header() {
   // 現在選択されている代理店
@@ -125,6 +125,16 @@ export function Header() {
             <CircleDollarSign className="h-5 w-5 mb-1" />
             <span className="text-xs font-medium">報酬管理</span>
           </Link>
+          <Link
+            href="/settings"
+            className={`flex flex-col items-center justify-center px-3 py-1 rounded-md ${
+              currentPath === "/settings" ? "text-primary bg-primary/10" : "text-gray-600 hover:bg-gray-100"
+            }`}
+            onClick={() => setCurrentPath("/settings")}
+          >
+            <Settings className="h-5 w-5 mb-1" />
+            <span className="text-xs font-medium">設定</span>
+          </Link>
         </nav>
 
         {/* ユーザーメニュー (UserButton) */}
@@ -134,7 +144,7 @@ export function Header() {
               <Button variant="ghost" className="flex items-center gap-2 px-2 rounded-full hover:bg-gray-100">
                 <Avatar className="h-8 w-8 border border-gray-200">
                   {user.image ? (
-                    <AvatarImage src={user.image} alt={user.name} />
+                    <AvatarImage src={user.image || "/placeholder.svg"} alt={user.name} />
                   ) : (
                     <AvatarFallback>{user.name.substring(0, 2)}</AvatarFallback>
                   )}
