@@ -18,7 +18,6 @@ interface BasicInfoFormProps {
 // 基本情報フォームのバリデーションスキーマ
 const basicInfoSchema = z.object({
   name: z.string().min(1, "代理店名は必須です"),
-  email: z.string().email("有効なメールアドレスを入力してください"),
 })
 
 export function BasicInfoForm({ initialSettings }: BasicInfoFormProps) {
@@ -30,7 +29,6 @@ export function BasicInfoForm({ initialSettings }: BasicInfoFormProps) {
     resolver: zodResolver(basicInfoSchema),
     defaultValues: {
       name: initialSettings.name,
-      email: initialSettings.email,
     },
   })
 
@@ -75,21 +73,6 @@ export function BasicInfoForm({ initialSettings }: BasicInfoFormProps) {
                   <FormControl>
                     <Input placeholder="代理店名を入力" {...field} />
                   </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>メールアドレス</FormLabel>
-                  <FormControl>
-                    <Input placeholder="連絡先メールアドレスを入力" {...field} />
-                  </FormControl>
-                  <FormDescription>報酬の通知や重要なお知らせが送信されます。</FormDescription>
                   <FormMessage />
                 </FormItem>
               )}
